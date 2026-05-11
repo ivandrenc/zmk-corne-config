@@ -4,7 +4,7 @@ include:
 #    shield: nice_view
 #    #snippet: zmk-usb-logging    # Uncomment to log over USB.
   - board: eyelash_corne_right
-    shield: nice_view
+    shield: claude_view
     #snippet: zmk-usb-logging
   - board: eyelash_corne_left
     shield: nice_view
