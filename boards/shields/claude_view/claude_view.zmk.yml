@@ -1,0 +1,7 @@
+file_format: "1"
+id: claude-view
+name: Claude View
+type: shield
+url: https://github.com/ivandrenc/zmk-corne-config
+features:
+  - display

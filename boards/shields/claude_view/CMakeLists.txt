@@ -1,0 +1,4 @@
+if(CONFIG_ZMK_DISPLAY)
+    zephyr_library_sources(custom_status_screen.c)
+    zephyr_library_sources(assets/claude_art.c)
+endif()

@@ -1,0 +1,24 @@
+/*
+ * Copyright (c) 2024 ZMK Contributors
+ * SPDX-License-Identifier: MIT
+ *
+ * Sets up the Sharp LS0XX memory display on the nice_view SPI bus.
+ * Mirrors what the standard nice_view shield provides.
+ */
+
+&nice_view_spi {
+    status = "okay";
+    nice_view: ls0xx@0 {
+        compatible = "sharp,ls0xx";
+        spi-max-frequency = <1000000>;
+        reg = <0>;
+        width = <160>;
+        height = <68>;
+    };
+};
+
+/ {
+    chosen {
+        zephyr,display = &nice_view;
+    };
+};
