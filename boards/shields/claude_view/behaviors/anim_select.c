@@ -3,22 +3,15 @@
  * SPDX-License-Identifier: MIT
  *
  * Animation index store for the claude_view display.
- *
- * Provides zmk_claude_view_get_animation() / zmk_claude_view_set_animation()
- * for use by custom_status_screen.c.
- *
- * Runtime switching from keys on the central half uses module behaviors
- * behavior_anim_pick.c / behavior_anim_cycle.c (BEHAVIOR_LOCALITY_GLOBAL).
- *
- * Pick default wave vs gym at boot: INITIAL_ANIM below (flash right half).
  */
 
 #include <zephyr/sys/atomic.h>
 #include <zephyr/types.h>
 
 #include "../assets/claude_art.h"
+#include "../assets/claude_view_display.h"
 
-#define INITIAL_ANIM 1   /* 0 = wave,  1 = gym */
+#define INITIAL_ANIM 0   /* 0 = wave,  1 = gym */
 
 static atomic_t anim_idx = ATOMIC_INIT(INITIAL_ANIM);
 
@@ -27,5 +20,9 @@ uint8_t zmk_claude_view_get_animation(void) {
 }
 
 void zmk_claude_view_set_animation(uint8_t idx) {
+    if (animation_count == 0) {
+        return;
+    }
     atomic_set(&anim_idx, idx % animation_count);
+    zmk_claude_view_animation_dirty();
 }
