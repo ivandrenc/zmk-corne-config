@@ -11,7 +11,7 @@
 #include "../assets/claude_art.h"
 #include "../assets/claude_view_display.h"
 
-#define INITIAL_ANIM 0   /* 0 = wave,  1 = gym */
+#define INITIAL_ANIM 0   /* 0 = look, 1 = gym, 2 = boo */
 
 static atomic_t anim_idx = ATOMIC_INIT(INITIAL_ANIM);
 

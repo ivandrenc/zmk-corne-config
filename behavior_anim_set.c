@@ -2,7 +2,7 @@
  * Copyright (c) 2024 ZMK Contributors
  * SPDX-License-Identifier: MIT
  *
- * Fixed-index animation selectors (wave, gym, …) for split keyboards.
+ * Fixed-index animation selectors (look, gym, boo, …) for split keyboards.
  */
 
 #define DT_DRV_COMPAT zmk_behavior_anim_set

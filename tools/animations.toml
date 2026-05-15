@@ -5,16 +5,16 @@
 #       --output boards/shields/claude_view/assets/claude_art.c
 #
 # Boot animation: INITIAL_ANIM in boards/shields/claude_view/behaviors/anim_select.c
-# (0 = wave, 1 = gym, 2 = boo).
+# (0 = look, 1 = gym, 2 = boo).
 #
-# Runtime switching: &anim_wave, &anim_gym, &anim_boo, or &anim_cyc on the Fn layer
+# Runtime switching: &anim_look, &anim_gym, &anim_boo, or &anim_cyc on the Fn layer
 # (BEHAVIOR_LOCALITY_GLOBAL — same split pipe as RGB underglow).
 
 [[animations]]
-name         = "wave"
-dir          = "mascot-frames-waving-flag"
+name         = "look"
+dir          = "Claude Looking JPG Sequence"
 # Omit sequence → all frames in directory order (sorted by filename).
-ms_per_frame = 200
+ms_per_frame = 60
 
 [[animations]]
 name         = "gym"

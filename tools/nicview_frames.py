@@ -9,11 +9,11 @@ Single-animation usage
 
     Examples:
         # Write to the shield asset file with a back-and-forth sequence
-        python3 tools/nicview_frames.py mascot-frames-waving-flag/ \\
+        python3 tools/nicview_frames.py "Claude Looking JPG Sequence/" \\
             --output boards/shields/claude_view/assets/claude_art.c \\
-            --prefix wave \\
+            --prefix look \\
             --sequence 1,2,3,4,3,2 \\
-            --ms-per-frame 200
+            --ms-per-frame 60
 
 Multi-animation manifest usage
 -------------------------------
@@ -23,10 +23,9 @@ Multi-animation manifest usage
     The manifest is a TOML file with an [[animations]] array:
 
         [[animations]]
-        name       = "wave"
-        dir        = "mascot-frames-waving-flag"
-        sequence   = "1,2,3,4,3,2"
-        ms_per_frame = 200
+        name       = "look"
+        dir        = "Claude Looking JPG Sequence"
+        ms_per_frame = 60
 
         [[animations]]
         name       = "gym"
@@ -35,8 +34,7 @@ Multi-animation manifest usage
 
     Multi-animation mode emits a `struct claude_animation animations[]` table
     and a `uint8_t animation_count` constant. The firmware can switch between
-    them at runtime via the &anim_select ZMK behavior (see
-    boards/shields/claude_view/behaviors/anim_select.c).
+    them at runtime via behaviors in the keymap (see config/eyelash_corne.keymap).
 
 Pipeline (per frame)
 --------------------
