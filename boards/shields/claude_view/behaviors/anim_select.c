@@ -7,10 +7,11 @@
  * Provides zmk_claude_view_get_animation() / zmk_claude_view_set_animation()
  * for use by custom_status_screen.c.
  *
- * Runtime keybinding switching requires cross-split ZMK event forwarding
- * (central → peripheral), which is deferred to a future implementation.
- * For now the index stays at 0 (first animation) after flashing; you can
- * change the default by editing INITIAL_ANIM below and reflashing.
+ * BLE split + ZMK v0.3: the peripheral firmware does not include keymap or
+ * layer_state_changed (central-only in app/CMakeLists.txt). Keys pressed on the
+ * left half cannot update animation selection on the right half via behaviors.
+ *
+ * Pick default wave vs gym: INITIAL_ANIM below (then rebuild / flash right half).
  */
 
 #include <zephyr/sys/atomic.h>
