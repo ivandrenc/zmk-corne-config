@@ -1,0 +1,10 @@
+description: |
+  Advance to the next Claude View animation on the peripheral (wraps).
+  Uses BEHAVIOR_LOCALITY_GLOBAL — forwarded over split BLE like RGB underglow.
+
+compatible: "zmk,behavior-anim-cycle"
+
+properties:
+  "#binding-cells":
+    type: int
+    const: 0

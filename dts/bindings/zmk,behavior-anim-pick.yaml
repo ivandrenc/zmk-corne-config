@@ -1,0 +1,13 @@
+description: |
+  Select Claude View mascot animation by index on the Bluetooth peripheral half.
+  Uses BEHAVIOR_LOCALITY_GLOBAL so the central half forwards this behavior over
+  ZMK's existing split "run behavior" GATT write (same pipe as RGB underglow).
+
+  Example: &anim_pick 0 (wave), &anim_pick 1 (gym).
+
+compatible: "zmk,behavior-anim-pick"
+
+properties:
+  "#binding-cells":
+    type: int
+    const: 1

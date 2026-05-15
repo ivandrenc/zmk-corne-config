@@ -7,11 +7,10 @@
  * Provides zmk_claude_view_get_animation() / zmk_claude_view_set_animation()
  * for use by custom_status_screen.c.
  *
- * BLE split + ZMK v0.3: the peripheral firmware does not include keymap or
- * layer_state_changed (central-only in app/CMakeLists.txt). Keys pressed on the
- * left half cannot update animation selection on the right half via behaviors.
+ * Runtime switching from keys on the central half uses module behaviors
+ * behavior_anim_pick.c / behavior_anim_cycle.c (BEHAVIOR_LOCALITY_GLOBAL).
  *
- * Pick default wave vs gym: INITIAL_ANIM below (then rebuild / flash right half).
+ * Pick default wave vs gym at boot: INITIAL_ANIM below (flash right half).
  */
 
 #include <zephyr/sys/atomic.h>

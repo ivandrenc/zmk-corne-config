@@ -4,10 +4,11 @@
 #   python3 tools/nicview_frames.py --manifest tools/animations.toml \
 #       --output boards/shields/claude_view/assets/claude_art.c
 #
-# Which clip plays at boot: set INITIAL_ANIM in
-# boards/shields/claude_view/behaviors/anim_select.c (0 = wave, 1 = gym).
-# ZMK v0.3 BLE peripherals omit keymap/layer events on the display MCU, so
-# keybindings cannot switch animations without upstream firmware changes.
+# Boot animation: INITIAL_ANIM in boards/shields/claude_view/behaviors/anim_select.c
+# (0 = wave, 1 = gym).
+#
+# Runtime switching from the central half: bind &anim_pick N or &anim_cycle in the
+# keymap — uses BEHAVIOR_LOCALITY_GLOBAL (split “run behavior”, same pipe as RGB).
 
 [[animations]]
 name         = "wave"
