@@ -4,7 +4,7 @@
  *
  * Claude View — custom peripheral status screen for ZMK nice!view.
  *
- * Animation switching: Fn layer &anim_look / &anim_gym / &anim_boo / &anim_cyc.
+ * Animation switching: Fn layer &anim_look / &anim_gym / &anim_boo / &anim_party / &anim_cyc.
  * Central forwards via BEHAVIOR_LOCALITY_GLOBAL (split BLE run-behavior).
  * Updates are applied on the LVGL display work queue.
  */
