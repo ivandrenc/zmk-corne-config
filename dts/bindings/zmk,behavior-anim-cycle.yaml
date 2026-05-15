@@ -4,7 +4,4 @@ description: |
 
 compatible: "zmk,behavior-anim-cycle"
 
-properties:
-  "#binding-cells":
-    type: int
-    const: 0
+include: zero_param.yaml

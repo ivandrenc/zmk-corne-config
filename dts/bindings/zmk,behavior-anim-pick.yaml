@@ -7,7 +7,4 @@ description: |
 
 compatible: "zmk,behavior-anim-pick"
 
-properties:
-  "#binding-cells":
-    type: int
-    const: 1
+include: one_param.yaml
