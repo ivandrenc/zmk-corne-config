@@ -5,10 +5,10 @@
 #       --output boards/shields/claude_view/assets/claude_art.c
 #
 # Boot animation: INITIAL_ANIM in boards/shields/claude_view/behaviors/anim_select.c
-# (0 = wave, 1 = gym).
+# (0 = wave, 1 = gym, 2 = boo).
 #
-# Runtime switching from the central half: bind &anim_pick N or &anim_cycle in the
-# keymap — uses BEHAVIOR_LOCALITY_GLOBAL (split “run behavior”, same pipe as RGB).
+# Runtime switching: &anim_wave, &anim_gym, &anim_boo, or &anim_cyc on the Fn layer
+# (BEHAVIOR_LOCALITY_GLOBAL — same split pipe as RGB underglow).
 
 [[animations]]
 name         = "wave"
@@ -20,3 +20,8 @@ ms_per_frame = 200
 name         = "gym"
 dir          = "claude-gym-animation-frames"
 ms_per_frame = 80
+
+[[animations]]
+name         = "boo"
+dir          = "boo-animation-frames"
+ms_per_frame = 100
