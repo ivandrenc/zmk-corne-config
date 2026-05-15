@@ -1,14 +1,9 @@
 description: |
   Select a display animation by index.
-
-  Bind as:  &anim_select 0   (wave)
-            &anim_select 1   (gym)
-            &anim_select_next   (cycle forward through all animations)
+  Use as:  &anim_select 0   (wave)
+           &anim_select 1   (gym)
 
 compatible: "zmk,behavior-anim-select"
-
-include:
-  - name: behavior.yaml
 
 properties:
   "#binding-cells":
