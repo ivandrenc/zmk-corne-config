@@ -17,14 +17,17 @@ LV_IMG_DECLARE(claude_frame_2);
 LV_IMG_DECLARE(claude_frame_3);
 LV_IMG_DECLARE(claude_frame_4);
 
+/* 6-entry sequence produces a smooth back-and-forth wave: 1→2→3→4→3→2 */
 static const lv_img_dsc_t *claude_frames[] = {
     &claude_frame_1,
     &claude_frame_2,
     &claude_frame_3,
     &claude_frame_4,
+    &claude_frame_3,
+    &claude_frame_2,
 };
-#define FRAME_COUNT  4
-#define MS_PER_FRAME 400   /* 400 ms per frame → 1.6 s full cycle */
+#define FRAME_COUNT  6
+#define MS_PER_FRAME 200   /* 200 ms per frame → 1.2 s full cycle */
 
 /* ── Screen init (called once by ZMK display subsystem) ─────── */
 
