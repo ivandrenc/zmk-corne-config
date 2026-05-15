@@ -4,9 +4,9 @@
  *
  * Claude View — custom peripheral status screen for ZMK nice!view.
  *
- * Animation switching: Fn layer keys &anim_pick 0 / &anim_pick 1 / &anim_cycle
- * on the RIGHT half. Central forwards via BEHAVIOR_LOCALITY_EVENT_SOURCE
- * (split BLE run-behavior). Updates are applied on the LVGL display work queue.
+ * Animation switching: Fn layer &anim_pick 0/1 or &anim_cyc on the RIGHT half.
+ * Central forwards via BEHAVIOR_LOCALITY_GLOBAL (split BLE run-behavior).
+ * Updates are applied on the LVGL display work queue.
  */
 
 #include <zephyr/kernel.h>

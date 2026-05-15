@@ -2,36 +2,41 @@
  * Copyright (c) 2024 ZMK Contributors
  * SPDX-License-Identifier: MIT
  *
- * Cycle Claude View animations on the BLE peripheral (EVENT_SOURCE locality).
+ * Cycle Claude View animations on the display half (GLOBAL locality).
  */
 
 #include <zephyr/devicetree.h>
 
-#if DT_NODE_EXISTS(DT_NODELABEL(anim_cycle))
+#if DT_NODE_EXISTS(DT_NODELABEL(anim_cyc))
 
 #include <zephyr/device.h>
 #include <drivers/behavior.h>
 #include <zmk/behavior.h>
 #include <zephyr/logging/log.h>
 
+#include "claude_view_display.h"
+
 LOG_MODULE_DECLARE(zmk, CONFIG_ZMK_LOG_LEVEL);
 
-#if defined(CONFIG_BOARD_EYELASH_CORNE_RIGHT)
-#include "claude_view_display.h"
-#include "claude_art.h"
-#endif
+__weak const uint8_t animation_count;
+
+__weak uint8_t zmk_claude_view_get_animation(void) {
+    return 0;
+}
+
+__weak void zmk_claude_view_set_animation(uint8_t idx) {
+    ARG_UNUSED(idx);
+}
 
 static int anim_cycle_binding_pressed(struct zmk_behavior_binding *binding,
                                       struct zmk_behavior_binding_event event) {
     ARG_UNUSED(binding);
     ARG_UNUSED(event);
 
-#if defined(CONFIG_BOARD_EYELASH_CORNE_RIGHT)
     if (animation_count > 0) {
         uint8_t next = (zmk_claude_view_get_animation() + 1) % animation_count;
         zmk_claude_view_set_animation(next);
     }
-#endif
     return ZMK_BEHAVIOR_OPAQUE;
 }
 
@@ -45,10 +50,10 @@ static int anim_cycle_binding_released(struct zmk_behavior_binding *binding,
 static const struct behavior_driver_api behavior_anim_cycle_driver_api = {
     .binding_pressed = anim_cycle_binding_pressed,
     .binding_released = anim_cycle_binding_released,
-    .locality = BEHAVIOR_LOCALITY_EVENT_SOURCE,
+    .locality = BEHAVIOR_LOCALITY_GLOBAL,
 };
 
-BEHAVIOR_DT_DEFINE(DT_NODELABEL(anim_cycle), NULL, NULL, NULL, NULL, POST_KERNEL,
+BEHAVIOR_DT_DEFINE(DT_NODELABEL(anim_cyc), NULL, NULL, NULL, NULL, POST_KERNEL,
                     CONFIG_KERNEL_INIT_PRIORITY_DEFAULT, &behavior_anim_cycle_driver_api);
 
-#endif /* DT_NODE_EXISTS(DT_NODELABEL(anim_cycle)) */
+#endif /* DT_NODE_EXISTS(DT_NODELABEL(anim_cyc)) */
