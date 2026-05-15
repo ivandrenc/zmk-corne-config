@@ -3014,8 +3014,6 @@ static const lv_img_dsc_t * const wave_frames[] = {
     &wave_2,
     &wave_3,
     &wave_4,
-    &wave_3,
-    &wave_2,
 };
 
 static const lv_img_dsc_t * const gym_frames[] = {
@@ -3054,7 +3052,7 @@ const struct claude_animation animations[] = {
     {
         .name        = "wave",
         .frames      = wave_frames,
-        .count       = 6,
+        .count       = 4,
         .ms_per_frame = 200,
     },
     {

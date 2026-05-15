@@ -11,7 +11,7 @@
 [[animations]]
 name         = "wave"
 dir          = "mascot-frames-waving-flag"
-sequence     = "1,2,3,4,3,2"
+sequence     = "1,2,3,4"
 ms_per_frame = 200
 
 [[animations]]
