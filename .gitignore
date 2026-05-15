@@ -2,3 +2,4 @@ build/
 zmk/
 modules/
 .west/
+boo(b) animation/
