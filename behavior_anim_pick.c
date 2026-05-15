@@ -5,6 +5,8 @@
  * Select Claude View animation by index on the BLE peripheral (EVENT_SOURCE locality).
  */
 
+#include <zephyr/devicetree.h>
+
 #if DT_NODE_EXISTS(DT_NODELABEL(anim_pick))
 
 #include <zephyr/device.h>

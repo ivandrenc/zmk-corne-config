@@ -5,6 +5,8 @@
  * Cycle Claude View animations on the BLE peripheral (EVENT_SOURCE locality).
  */
 
+#include <zephyr/devicetree.h>
+
 #if DT_NODE_EXISTS(DT_NODELABEL(anim_cycle))
 
 #include <zephyr/device.h>
