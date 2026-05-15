@@ -3,3 +3,4 @@ zmk/
 modules/
 .west/
 boo(b) animation/
+boo-animation-frames/

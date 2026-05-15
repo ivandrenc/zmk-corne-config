@@ -184,8 +184,8 @@ layers:
   - '&mkp MB5'
   - $$mdi:volume-off$$
   - {t: '$$mdi:menu-down$$', s: '$$mdi:mouse$$'}
-  - '&anim_pick'
-  - '&anim_pick 1'
+  - '&anim_wave'
+  - '&anim_gym'
   - '&anim_cyc'
   - {t: '$$mdi:backup-restore$$', type: bootloader}
   - SCROLLLOCK

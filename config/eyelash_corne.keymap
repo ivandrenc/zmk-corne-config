@@ -37,12 +37,18 @@
             bindings = <&kp LEFT_SHIFT>, <&kp CAPS>;
         };
 
-        /* Companion display (right half): forwarded over split BLE — see behavior_anim_pick.c */
-        anim_pick: anim_pick {
-            compatible = "zmk,behavior-anim-pick";
-            #binding-cells = <1>;
+        /* Display half: zero-param behaviors (split BLE cannot rely on anim_pick params). */
+        anim_wave: anim_wave {
+            compatible = "zmk,behavior-anim-set";
+            animation-index = <0>;
+            #binding-cells = <0>;
         };
-        /* Label anim_cyc: BLE run-behavior name is max 9 chars (ANIM_CYC). */
+        anim_gym: anim_gym {
+            compatible = "zmk,behavior-anim-set";
+            animation-index = <1>;
+            #binding-cells = <0>;
+        };
+        /* Label anim_cyc: BLE run-behavior name max 9 chars (ANIM_CYC). */
         anim_cyc: anim_cyc {
             compatible = "zmk,behavior-anim-cycle";
             #binding-cells = <0>;
@@ -116,7 +122,7 @@
             bindings = <
 &studio_unlock  &kp F1      &kp F2     &kp F3       &kp F4     &kp F5                                  &mmv MOVE_UP                     &kp F6       &kp F7     &kp F8       &kp F9      &kp F10          &kp F11
 &trans          &trans      &mkp LCLK  &mkp MCLK    &mkp RCLK  &mkp MB4                &mmv MOVE_LEFT  &mkp LCLK       &mmv MOVE_RIGHT  &bootloader  &mkp LCLK  &mkp MCLK    &mkp RCLK   &kp PRINTSCREEN  &kp F12
-&trans          &sys_reset  &trans     &bootloader  &trans     &mkp MB5  &kp C_MUTE                    &mmv MOVE_DOWN                   &anim_pick 0  &anim_pick 1     &anim_cyc       &sys_reset  &kp SCROLLLOCK   &kp PAUSE_BREAK
+&trans          &sys_reset  &trans     &bootloader  &trans     &mkp MB5  &kp C_MUTE                    &mmv MOVE_DOWN                   &anim_wave    &anim_gym        &anim_cyc       &sys_reset  &kp SCROLLLOCK   &kp PAUSE_BREAK
                                        &trans       &trans     &trans                                                                   &trans       &trans     &trans
             >;
 

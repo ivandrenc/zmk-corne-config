@@ -1,0 +1,13 @@
+description: |
+  Select a fixed Claude View animation index on the display half (no parameters).
+  Uses BEHAVIOR_LOCALITY_GLOBAL — forwarded over split BLE like RGB underglow.
+  Split BLE only passes a 9-char behavior name; parametric anim_pick is unreliable.
+
+compatible: "zmk,behavior-anim-set"
+
+include: zero_param.yaml
+
+properties:
+  animation-index:
+    type: int
+    required: true
