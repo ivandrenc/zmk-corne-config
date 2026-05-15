@@ -33,6 +33,10 @@ static int anim_set_binding_released(struct zmk_behavior_binding *binding,
 }
 
 #define ANIM_SET_INST(n)                                                                           \
+    static const struct behavior_anim_set_config config_##n = {                                  \
+        .animation_index = DT_INST_PROP(n, animation_index),                                     \
+    };                                                                                           \
+                                                                                                 \
     static int anim_set_binding_pressed_##n(struct zmk_behavior_binding *binding,                \
                                             struct zmk_behavior_binding_event event) {           \
         ARG_UNUSED(binding);                                                                     \
@@ -40,10 +44,6 @@ static int anim_set_binding_released(struct zmk_behavior_binding *binding,
         zmk_claude_view_set_animation(config_##n.animation_index);                                 \
         return ZMK_BEHAVIOR_OPAQUE;                                                              \
     }                                                                                            \
-                                                                                                 \
-    static const struct behavior_anim_set_config config_##n = {                                  \
-        .animation_index = DT_INST_PROP(n, animation_index),                                     \
-    };                                                                                           \
                                                                                                  \
     static const struct behavior_driver_api api_##n = {                                          \
         .binding_pressed = anim_set_binding_pressed_##n,                                         \
