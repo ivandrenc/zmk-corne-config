@@ -13,7 +13,7 @@
 [[animations]]
 name         = "wave"
 dir          = "mascot-frames-waving-flag"
-sequence     = "1,2,3,4"
+# Omit sequence → all frames in directory order (sorted by filename).
 ms_per_frame = 200
 
 [[animations]]
