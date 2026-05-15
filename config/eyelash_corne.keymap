@@ -48,15 +48,17 @@
             animation-index = <1>;
             #binding-cells = <0>;
         };
+        /*
         anim_boo: anim_boo {
             compatible = "zmk,behavior-anim-set";
             animation-index = <2>;
             #binding-cells = <0>;
         };
+        */
         /* anim_party: label ≤9 chars for split BLE run-behavior device name. */
         anim_party: anim_party {
             compatible = "zmk,behavior-anim-set";
-            animation-index = <3>;
+            animation-index = <2>;
             #binding-cells = <0>;
         };
         /* Label anim_cyc: BLE run-behavior name max 9 chars (ANIM_CYC). */
@@ -132,7 +134,7 @@
             display-name = "Fn";
             bindings = <
 &studio_unlock  &kp F1      &kp F2     &kp F3       &kp F4     &kp F5                                  &mmv MOVE_UP                     &kp F6       &kp F7     &kp F8       &kp F9      &kp F10          &kp F11
-&trans          &trans      &mkp LCLK  &mkp MCLK    &mkp RCLK  &mkp MB4                &mmv MOVE_LEFT  &mkp LCLK       &mmv MOVE_RIGHT  &anim_boo &anim_party &mkp MCLK    &mkp RCLK   &kp PRINTSCREEN  &kp F12
+&trans          &trans      &mkp LCLK  &mkp MCLK    &mkp RCLK  &mkp MB4                &mmv MOVE_LEFT  &mkp LCLK       &mmv MOVE_RIGHT  &trans &anim_party &mkp MCLK    &mkp RCLK   &kp PRINTSCREEN  &kp F12
 &trans          &sys_reset  &trans     &bootloader  &trans     &mkp MB5  &kp C_MUTE                    &mmv MOVE_DOWN                   &anim_look    &anim_gym        &anim_cyc       &sys_reset  &kp SCROLLLOCK   &kp PAUSE_BREAK
                                        &trans       &trans     &trans                                                                   &trans       &trans     &trans
             >;

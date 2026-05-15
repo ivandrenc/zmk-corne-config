@@ -5,9 +5,9 @@
 #       --output boards/shields/claude_view/assets/claude_art.c
 #
 # Boot animation: INITIAL_ANIM in boards/shields/claude_view/behaviors/anim_select.c
-# (0 = look, 1 = gym, 2 = boo, 3 = confetti).
+# (0 = look, 1 = gym, 2 = confetti). Boo disabled in manifest below — re-enable and regenerate to add back.
 #
-# Runtime switching: &anim_look, &anim_gym, &anim_boo, &anim_party, or &anim_cyc on the Fn layer
+# Runtime switching: &anim_look, &anim_gym, &anim_party, or &anim_cyc on the Fn layer
 # (BEHAVIOR_LOCALITY_GLOBAL — same split pipe as RGB underglow).
 
 [[animations]]
@@ -23,10 +23,13 @@ name         = "gym"
 dir          = "claude-gym-animation-frames"
 ms_per_frame = 120
 
-[[animations]]
-name         = "boo"
-dir          = "boo-animation-frames"
-ms_per_frame = 100
+# --- boo: disabled (smaller firmware / easier UF2 flash). Uncomment the block and run
+#     nicview_frames.py to ship boo again; then restore anim_boo in the keymap and set
+#     anim_party animation-index to <3>.
+# [[animations]]
+# name         = "boo"
+# dir          = "boo-animation-frames"
+# ms_per_frame = 100
 
 [[animations]]
 name         = "confetti"
