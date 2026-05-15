@@ -1,4 +1,5 @@
 name: Draw Keymap
+
 on:
   workflow_dispatch:
   push:
@@ -13,6 +14,7 @@ jobs:
     permissions:
       contents: write
     with:
-      commit_message: "[Draw] ${{ github.event.head_commit.message }}"
-      destination: "commit"
-      fail_on_error: ${{ fromJSON(true) }}
+      destination: commit
+      # Fold SVG/YAML into the commit that changed config (avoids a second commit racing main).
+      amend_commit: true
+      fail_on_error: true

@@ -81,13 +81,13 @@ layers:
   - {t: '$$mdi:transfer$$', type: trans}
   - RGB OFF
   - RGB ON
-  - {t: '$$mdi:transfer$$', type: trans}
-  - {t: '$$mdi:transfer$$', type: trans}
+  - RGB HUD
+  - RGB HUI
   - RGB EFF
   - $$mdi:volume-off$$
   - {t: '$$mdi:menu-down$$', s: '$$mdi:mouse$$'}
   - RGB EFR
-  - RGB SPI
+  - RGB COLOR HSB CMD RGB COLOR HSB VAL(0, 100, 100)
   - RGB BRI
   - RGB BRD
   - END
