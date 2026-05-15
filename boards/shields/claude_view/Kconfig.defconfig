@@ -29,4 +29,12 @@ config ZMK_DISPLAY_STATUS_SCREEN_CUSTOM
     select LV_USE_ANIMIMG
     select LV_USE_ANIMATION
 
+config ZMK_BEHAVIOR_ANIM_SELECT
+    bool
+    default y
+
+config ZMK_BEHAVIOR_ANIM_NEXT
+    bool
+    default y
+
 endif # SHIELD_CLAUDE_VIEW

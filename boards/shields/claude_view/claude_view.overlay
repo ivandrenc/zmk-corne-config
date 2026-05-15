@@ -21,4 +21,18 @@
     chosen {
         zephyr,display = &nice_view;
     };
+
+    behaviors {
+        /* Jump directly to animation index N:  &anim_select 0 / &anim_select 1 */
+        anim_select: anim_select {
+            compatible = "zmk,behavior-anim-select";
+            #binding-cells = <1>;
+        };
+
+        /* Cycle to the next animation (wraps around):  &anim_next */
+        anim_next: anim_next {
+            compatible = "zmk,behavior-anim-next";
+            #binding-cells = <0>;
+        };
+    };
 };

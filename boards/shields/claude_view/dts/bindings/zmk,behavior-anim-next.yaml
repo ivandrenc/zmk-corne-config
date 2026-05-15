@@ -1,0 +1,13 @@
+description: |
+  Cycle to the next display animation (wraps around).
+  Use as a zero-parameter binding:  &anim_next
+
+compatible: "zmk,behavior-anim-next"
+
+include:
+  - name: behavior.yaml
+
+properties:
+  "#binding-cells":
+    type: int
+    const: 0

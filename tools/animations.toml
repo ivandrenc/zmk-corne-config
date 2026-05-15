@@ -1,0 +1,20 @@
+# Animation manifest for the claude_view nice!view shield.
+#
+# Run to regenerate claude_art.c:
+#   python3 tools/nicview_frames.py --manifest tools/animations.toml \
+#       --output boards/shields/claude_view/assets/claude_art.c
+#
+# Switch between animations at runtime with keymap bindings:
+#   &anim_select 0   →  wave (index 0)
+#   &anim_select 1   →  gym  (index 1)
+
+[[animations]]
+name         = "wave"
+dir          = "mascot-frames-waving-flag"
+sequence     = "1,2,3,4,3,2"
+ms_per_frame = 200
+
+[[animations]]
+name         = "gym"
+dir          = "claude-gym-animation-frames"
+ms_per_frame = 80

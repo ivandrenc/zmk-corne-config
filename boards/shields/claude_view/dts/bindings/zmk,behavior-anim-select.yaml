@@ -1,0 +1,16 @@
+description: |
+  Select a display animation by index.
+
+  Bind as:  &anim_select 0   (wave)
+            &anim_select 1   (gym)
+            &anim_select_next   (cycle forward through all animations)
+
+compatible: "zmk,behavior-anim-select"
+
+include:
+  - name: behavior.yaml
+
+properties:
+  "#binding-cells":
+    type: int
+    const: 1
