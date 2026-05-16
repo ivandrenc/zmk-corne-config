@@ -14,7 +14,7 @@
 name         = "look"
 dir          = "Claude Looking JPG Sequence"
 # Omit sequence → all frames in directory order (sorted by filename).
-ms_per_frame = 100
+ms_per_frame = 30
 
 
 
