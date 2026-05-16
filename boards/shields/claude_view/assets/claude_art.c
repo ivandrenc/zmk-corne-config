@@ -20353,7 +20353,7 @@ const struct claude_animation animations[] = {
         .name        = "look",
         .frames      = look_frames,
         .count       = 149,
-        .ms_per_frame = 100,
+        .ms_per_frame = 30,
     },
     {
         .name        = "gym",
