@@ -328,6 +328,7 @@ def process_anim(spec: AnimSpec, tmp_dir: str
                  ) -> tuple[list[str], list[str], list[int]]:
     """Convert one AnimSpec. Returns (unique_names, unique_bmps, resolved_sequence)."""
     frames = collect_frames(spec.frames_dir)
+    verify_frame_numbering(frames, spec.name)
     n = len(frames)
     print(f"\n[{spec.name}] {n} frame(s) in '{spec.frames_dir}'", file=sys.stderr)
 
@@ -522,6 +523,23 @@ def collect_frames(frames_dir: str) -> list[str]:
         print(f"ERROR: No image files found in '{frames_dir}'.", file=sys.stderr)
         sys.exit(1)
     return files
+
+
+def verify_frame_numbering(frames: list[str], anim_name: str) -> None:
+    """Warn if sorted filenames are not contiguous 1..N (playback order depends on this)."""
+    nums: list[int] = []
+    for path in frames:
+        m = re.search(r"(\d+)", Path(path).name)
+        if not m:
+            print(f"WARNING: [{anim_name}] no frame number in '{Path(path).name}'", file=sys.stderr)
+            return
+        nums.append(int(m.group(1)))
+    expected = list(range(1, len(frames) + 1))
+    if nums != expected:
+        print(f"WARNING: [{anim_name}] frame numbers are not 1..{len(frames)} after sort.",
+              file=sys.stderr)
+        print(f"  First mismatch: expected {expected[len(nums)-1] if len(nums) < len(expected) else '?'}, "
+              f"got {nums}", file=sys.stderr)
 
 
 def parse_sequence(seq_str: str, n_frames: int) -> list[int]:

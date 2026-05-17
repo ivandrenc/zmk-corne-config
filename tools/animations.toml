@@ -13,9 +13,9 @@
 [[animations]]
 name         = "look"
 dir          = "Claude Looking JPG Sequence"
-# Skip hold (ezgif 27–130); look up 1–26 then return 131–149 (~45 steps).
-skip_range   = [27, 130]
-ms_per_frame = 20
+# All 149 frames in filename order (ezgif-frame-001 … 149): idle → look up → hold → return.
+# Do not skip ranges — that jumps from frame 26 to 131 and breaks the motion.
+ms_per_frame = 35
 
 
 

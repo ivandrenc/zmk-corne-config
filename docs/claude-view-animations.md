@@ -113,7 +113,8 @@ Goal: **smaller firmware / faster UF2** or fewer choices, **without** deleting t
 |---------|----------------|
 | Wrong animation when pressing a key | **`animation-index`** in keymap does not match **current** manifest order after add/remove/reorder. Regenerate `claude_art.c` after manifest edits. |
 | Look only plays “up” then jumps to frame 1 | **`count` must be `uint16_t`** in `claude_art.h` when steps exceed 255 (296 truncates to 40 as `uint8_t`). |
-| Look holds forever / feels very slow | Full **ping_pong** replays the hold twice; use **`skip_range`** to drop static frames and lower **`ms_per_frame`**. |
+| Animation looks wrong / jumps mid-motion | Do not use **`skip_range`** on look unless you accept a jump (e.g. 26→131 skips the real transition). Use all frames **1..N** in order. |
+| Look feels slow | Lower **`ms_per_frame`** (e.g. 35); avoid **ping_pong** unless you want the hold played twice. |
 | Build fails or generator errors on `dir` | Path wrong (run from repo root) or directory missing / empty / no supported images. |
 | `anim_cyc` skips or feels wrong | `animation_count` in generated `.c` does not match how many entries you think are active — fix manifest and regen. |
 | UF2 copy flaky or very slow | **`claude_art.c`** is huge with many frames; dropping an animation or reducing frames shrinks the binary. |
