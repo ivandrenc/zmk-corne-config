@@ -25,6 +25,7 @@ Multi-animation manifest usage
         [[animations]]
         name       = "look"
         dir        = "Claude Looking JPG Sequence"
+        ping_pong  = true
         ms_per_frame = 60
 
         [[animations]]
@@ -426,6 +427,15 @@ def build_multi_c(specs: list[AnimSpec], tmp_dir: str) -> str:
 # Manifest parsing (TOML)
 # ---------------------------------------------------------------------------
 
+def ping_pong_sequence(n_frames: int) -> list[int]:
+    """1..N then N-1..2 (endpoints not repeated on the way back)."""
+    if n_frames <= 0:
+        return []
+    if n_frames == 1:
+        return [1]
+    return list(range(1, n_frames + 1)) + list(range(n_frames - 1, 1, -1))
+
+
 def load_manifest(path: str, defaults: dict) -> list[AnimSpec]:
     """Parse animations.toml → list[AnimSpec]."""
     try:
@@ -446,8 +456,17 @@ def load_manifest(path: str, defaults: dict) -> list[AnimSpec]:
         name = entry["name"]
         frames_dir = entry["dir"]
         seq_str = entry.get("sequence", None)
+        ping_pong = entry.get("ping_pong", False)
         n_frames = len(collect_frames(frames_dir))
-        sequence = (parse_sequence(seq_str, n_frames) if seq_str else None)
+        if seq_str:
+            if ping_pong:
+                print(f"WARNING: [{name}] has both sequence and ping_pong; using sequence.",
+                      file=sys.stderr)
+            sequence = parse_sequence(seq_str, n_frames)
+        elif ping_pong:
+            sequence = ping_pong_sequence(n_frames)
+        else:
+            sequence = None
         specs.append(AnimSpec(
             name=name,
             frames_dir=frames_dir,

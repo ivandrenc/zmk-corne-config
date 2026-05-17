@@ -44,7 +44,8 @@ Each animation is one **`[[animations]]`** block.
 | `name` | yes | Short id used in C symbol prefixes (e.g. `look` → `look_1`, `look_frames`). |
 | `dir` | yes | Directory of frame images **relative to cwd** (repo root recommended). |
 | `ms_per_frame` | no | Frame timing; default comes from CLI (`--ms-per-frame`, default 200) if omitted. |
-| `sequence` | no | Comma-separated **1-based** frame indices, e.g. `1,2,3,2`. If omitted, all files in `dir` are used in sorted filename order. |
+| `sequence` | no | Comma-separated **1-based** frame indices, e.g. `1,2,3,2`. Overrides `ping_pong` if both are set. |
+| `ping_pong` | no | If `true` and `sequence` is omitted: play **1→N** then **N−1→2** (no snap from last frame back to first). |
 | `fuzz`, `padding`, `dither`, `threshold` | no | Override ImageMagick / pipeline options per animation (see `tools/nicview_frames.py` `load_manifest`). |
 | `no_rotate` | no | If true, skips the default 90° CW rotation (only if your hardware layout differs). |
 
