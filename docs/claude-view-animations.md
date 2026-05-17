@@ -45,7 +45,8 @@ Each animation is one **`[[animations]]`** block.
 | `dir` | yes | Directory of frame images **relative to cwd** (repo root recommended). |
 | `ms_per_frame` | no | Frame timing; default comes from CLI (`--ms-per-frame`, default 200) if omitted. |
 | `sequence` | no | Comma-separated **1-based** frame indices, e.g. `1,2,3,2`. Overrides `ping_pong` if both are set. |
-| `ping_pong` | no | If `true` and `sequence` is omitted: play **1→N** then **N−1→2** (no snap from last frame back to first). Look with 149 sources becomes **296** playback steps. |
+| `ping_pong` | no | If `true` and `sequence` is omitted: play **1→N** then **N−1→2**. Doubles loop time and replays hold frames on the way back. |
+| `skip_range` | no | Two integers `[from, to]` (1-based inclusive): skip that index range. Example: `[31, 130]` on look = idle + look up (1–30) + return (131–149). |
 | `fuzz`, `padding`, `dither`, `threshold` | no | Override ImageMagick / pipeline options per animation (see `tools/nicview_frames.py` `load_manifest`). |
 | `no_rotate` | no | If true, skips the default 90° CW rotation (only if your hardware layout differs). |
 
@@ -111,7 +112,8 @@ Goal: **smaller firmware / faster UF2** or fewer choices, **without** deleting t
 | Symptom | Likely cause |
 |---------|----------------|
 | Wrong animation when pressing a key | **`animation-index`** in keymap does not match **current** manifest order after add/remove/reorder. Regenerate `claude_art.c` after manifest edits. |
-| Look only plays “up” then jumps to frame 1 | **`count` must be `uint16_t`** in `claude_art.h` when ping-pong steps exceed 255 (296 truncates to 40 as `uint8_t`). |
+| Look only plays “up” then jumps to frame 1 | **`count` must be `uint16_t`** in `claude_art.h` when steps exceed 255 (296 truncates to 40 as `uint8_t`). |
+| Look holds forever / feels very slow | Full **ping_pong** replays the hold twice; use **`skip_range`** to drop static frames and lower **`ms_per_frame`**. |
 | Build fails or generator errors on `dir` | Path wrong (run from repo root) or directory missing / empty / no supported images. |
 | `anim_cyc` skips or feels wrong | `animation_count` in generated `.c` does not match how many entries you think are active — fix manifest and regen. |
 | UF2 copy flaky or very slow | **`claude_art.c`** is huge with many frames; dropping an animation or reducing frames shrinks the binary. |

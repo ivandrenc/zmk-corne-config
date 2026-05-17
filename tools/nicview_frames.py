@@ -255,7 +255,7 @@ def pipeline_str(dither: str, threshold: int | None, rotate: bool) -> str:
 # ---------------------------------------------------------------------------
 
 def build_single_c(unique_names: list[str], unique_bmps: list[str],
-                   sequence: list[int], frames_dir: str,
+                   unique_indices: list[int], sequence: list[int], frames_dir: str,
                    ms_per_frame: int, dither: str,
                    threshold: int | None, rotate: bool) -> str:
     seq_str = ",".join(str(i) for i in sequence)
@@ -281,12 +281,13 @@ def build_single_c(unique_names: list[str], unique_bmps: list[str],
         parts.append(c_frame_block(name, pixels_to_lvgl_bytes(pixels)))
         parts.append("")
 
-    seq_names = [f"&{unique_names[i - 1]}" for i in sequence]
+    by_idx = dict(zip(unique_indices, unique_names))
+    seq_names = [f"&{by_idx[i]}" for i in sequence]
     parts += [
         "const lv_img_dsc_t * const claude_frames[] = {",
         *[f"    {n}," for n in seq_names],
         "};",
-        f"const uint8_t  claude_frame_count = {len(sequence)};",
+        f"const uint16_t claude_frame_count = {len(sequence)};",
         f"const uint16_t claude_frame_ms    = {ms_per_frame};",
         "",
         "/* Single-animation shim — exposes the animations[] table expected by",
@@ -353,7 +354,7 @@ def process_anim(spec: AnimSpec, tmp_dir: str
                             spec.threshold, tmp_dir)
         unique_bmps.append(bmp)
 
-    return unique_names, unique_bmps, sequence
+    return unique_names, unique_bmps, unique_indices, sequence
 
 
 def build_multi_c(specs: list[AnimSpec], tmp_dir: str) -> str:
@@ -373,7 +374,7 @@ def build_multi_c(specs: list[AnimSpec], tmp_dir: str) -> str:
     anim_results: list[tuple[str, list[str], list[int], int]] = []
 
     for spec in specs:
-        unique_names, unique_bmps, sequence = process_anim(spec, tmp_dir)
+        unique_names, unique_bmps, unique_indices, sequence = process_anim(spec, tmp_dir)
         print(f"\n  Packing [{spec.name}]...", file=sys.stderr)
         for name, bmp in zip(unique_names, unique_bmps):
             print(f"    {Path(bmp).name} → {name} ...", file=sys.stderr)
@@ -384,11 +385,12 @@ def build_multi_c(specs: list[AnimSpec], tmp_dir: str) -> str:
                 pixels = (pixels + [0] * DISPLAY_W * DISPLAY_H)[:DISPLAY_W * DISPLAY_H]
             parts.append(c_frame_block(name, pixels_to_lvgl_bytes(pixels)))
             parts.append("")
-        anim_results.append((spec.name, unique_names, sequence, spec.ms_per_frame))
+        anim_results.append((spec.name, unique_names, unique_indices, sequence, spec.ms_per_frame))
 
     # Per-animation sequence arrays
-    for anim_name, unique_names, sequence, ms in anim_results:
-        seq_entries = [f"&{unique_names[i - 1]}" for i in sequence]
+    for anim_name, unique_names, unique_indices, sequence, ms in anim_results:
+        by_idx = dict(zip(unique_indices, unique_names))
+        seq_entries = [f"&{by_idx[i]}" for i in sequence]
         arr_name = f"{anim_name}_frames"
         parts += [
             f"static const lv_img_dsc_t * const {arr_name}[] = {{",
@@ -401,7 +403,7 @@ def build_multi_c(specs: list[AnimSpec], tmp_dir: str) -> str:
     parts += [
         "const struct claude_animation animations[] = {",
     ]
-    for anim_name, _, sequence, ms in anim_results:
+    for anim_name, _, _unique_indices, sequence, ms in anim_results:
         parts += [
             "    {",
             f'        .name        = "{anim_name}",',
@@ -416,7 +418,7 @@ def build_multi_c(specs: list[AnimSpec], tmp_dir: str) -> str:
         "",
         "/* Legacy single-anim aliases (first animation) */",
         "const lv_img_dsc_t * const * const claude_frames  = animations[0].frames;",
-        "const uint8_t  claude_frame_count                 = animations[0].count;",
+        "const uint16_t claude_frame_count                 = animations[0].count;",
         "const uint16_t claude_frame_ms                    = animations[0].ms_per_frame;",
         "",
     ]
@@ -434,6 +436,15 @@ def ping_pong_sequence(n_frames: int) -> list[int]:
     if n_frames == 1:
         return [1]
     return list(range(1, n_frames + 1)) + list(range(n_frames - 1, 1, -1))
+
+
+def sequence_skip_range(n_frames: int, skip_from: int, skip_to: int) -> list[int]:
+    """Play 1..skip_from-1 and skip_to+1..N (1-based, inclusive skip range)."""
+    if skip_from < 1 or skip_to > n_frames or skip_from > skip_to:
+        print(f"ERROR: skip_range [{skip_from}, {skip_to}] invalid for {n_frames} frame(s).",
+              file=sys.stderr)
+        sys.exit(1)
+    return list(range(1, skip_from)) + list(range(skip_to + 1, n_frames + 1))
 
 
 def load_manifest(path: str, defaults: dict) -> list[AnimSpec]:
@@ -457,12 +468,22 @@ def load_manifest(path: str, defaults: dict) -> list[AnimSpec]:
         frames_dir = entry["dir"]
         seq_str = entry.get("sequence", None)
         ping_pong = entry.get("ping_pong", False)
+        skip_range = entry.get("skip_range", None)
         n_frames = len(collect_frames(frames_dir))
         if seq_str:
-            if ping_pong:
-                print(f"WARNING: [{name}] has both sequence and ping_pong; using sequence.",
+            if ping_pong or skip_range:
+                print(f"WARNING: [{name}] has sequence; ignoring ping_pong/skip_range.",
                       file=sys.stderr)
             sequence = parse_sequence(seq_str, n_frames)
+        elif skip_range is not None:
+            if ping_pong:
+                print(f"WARNING: [{name}] has both skip_range and ping_pong; using skip_range.",
+                      file=sys.stderr)
+            if not isinstance(skip_range, list) or len(skip_range) != 2:
+                print(f"ERROR: [{name}] skip_range must be [from, to] (1-based inclusive).",
+                      file=sys.stderr)
+                sys.exit(1)
+            sequence = sequence_skip_range(n_frames, int(skip_range[0]), int(skip_range[1]))
         elif ping_pong:
             sequence = ping_pong_sequence(n_frames)
         else:
@@ -609,7 +630,7 @@ def main() -> None:
 
             print(f"\nPacking pixel data...", file=sys.stderr)
             c_content = build_single_c(
-                unique_names, unique_bmps, sequence, args.frames_dir,
+                unique_names, unique_bmps, unique_indices, sequence, args.frames_dir,
                 args.ms_per_frame, args.dither, args.threshold, rotate,
             )
 

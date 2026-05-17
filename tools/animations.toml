@@ -13,9 +13,9 @@
 [[animations]]
 name         = "look"
 dir          = "Claude Looking JPG Sequence"
-# ping_pong: play 1→149 then 148→2 (smooth return); omit for forward-only loop.
-ping_pong    = true
-ms_per_frame = 30
+# Skip hold (ezgif 27–130); look up 1–26 then return 131–149 (~45 steps).
+skip_range   = [27, 130]
+ms_per_frame = 20
 
 
 
