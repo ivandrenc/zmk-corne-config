@@ -17,7 +17,7 @@
 struct claude_animation {
     const char              *name;
     const lv_img_dsc_t * const *frames;
-    uint8_t                  count;
+    uint16_t                 count;  /* playback steps; ping-pong look can exceed 255 */
     uint16_t                 ms_per_frame;
 };
 
@@ -27,5 +27,5 @@ extern const uint8_t                 animation_count;
 
 /* Legacy single-animation aliases (first entry in animations[]). */
 extern const lv_img_dsc_t * const * const claude_frames;
-extern const uint8_t  claude_frame_count;
+extern const uint16_t claude_frame_count;
 extern const uint16_t claude_frame_ms;

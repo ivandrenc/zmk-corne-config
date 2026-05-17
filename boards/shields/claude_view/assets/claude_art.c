@@ -20519,5 +20519,5 @@ const uint8_t animation_count = 3;
 
 /* Legacy single-anim aliases (first animation) */
 const lv_img_dsc_t * const * const claude_frames  = animations[0].frames;
-const uint8_t  claude_frame_count                 = animations[0].count;
+const uint16_t claude_frame_count                 = animations[0].count;
 const uint16_t claude_frame_ms                    = animations[0].ms_per_frame;

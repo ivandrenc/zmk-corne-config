@@ -31,8 +31,8 @@ static void apply_animation(uint8_t idx) {
         return;
     }
     const struct claude_animation *a = &animations[idx];
-    lv_animimg_set_src(anim_widget, (const void **)a->frames, a->count);
-    lv_animimg_set_duration(anim_widget, (uint32_t)a->ms_per_frame * a->count);
+    lv_animimg_set_src(anim_widget, (const void **)a->frames, (size_t)a->count);
+    lv_animimg_set_duration(anim_widget, (uint32_t)a->ms_per_frame * (uint32_t)a->count);
     lv_animimg_set_repeat_count(anim_widget, LV_ANIM_REPEAT_INFINITE);
     lv_animimg_start(anim_widget);
     active_anim = idx;
